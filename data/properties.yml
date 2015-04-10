@@ -1,0 +1,921 @@
+*:
+	values: [initial,inherit]
+
+align-content:
+	values: [stretch,center,flex-start,flex-end,space-between,space-around]
+	version: 3
+
+align-items:
+	values: [stretch,center,flex-start,flex-end,baseline]
+	version: 3
+
+align-self:
+	values: [auto,stretch,center,flex-start,flex-end,baseline]
+	version: 3
+
+animation-delay:
+	values: [TIME]
+	version: 3
+
+animation-direction:
+	values: [normal,reverse,alternate,alternate-reverse]
+	version: 3
+
+animation-duration:
+	values: [TIME]
+	version: 3
+
+animation-fill-mode:
+	values: [none,forwards,backwards,both]
+	version: 3
+
+animation-iteration-count:
+	values: [NUMBER,infinite]
+	version: 3
+
+animation-name:
+	values: [KEYFRAMENAME,none]
+	version: 3
+
+animation-play-state:
+	values: [paused,running]
+	version: 3
+
+animation-timing-function:
+	values: [linear,ease,ease-in,ease-out,cubic-bezier(N,N,N,N)]
+	version: 3
+
+animation:
+	arguments: [NAME,DURATION,TIMING-FUNCTION,DELAY,ITERATION-COUNT,DIRECTION,FILL-MODE,PLAY-STATE]
+	version: 3
+
+backface-visibility:
+	values: [visible,hidden]
+	version: 3
+
+background-attachment:
+	values: [scroll,fixed,local]
+	version: 1
+
+background-clip:
+	values: [border-box,padding-box,content-box]
+	version: 3
+
+background-color:
+	values: [COLOR,transparent]
+	animatable: true
+	version: 1
+
+background-image:
+	values: [URL,none]
+	version: 1
+
+background-origin:
+	values: [padding-box,border-box,content-box]
+	version: 3
+
+background-position:
+	values: [VALUE]
+	animatable: true
+	version: 1
+
+background-repeat:
+	values: [repeat,repeat-x,repeat-y,no-repeat]
+	version: 1
+
+background-size:
+	values: [auto,LENGTH,cover,contain]
+	animatable: true
+	version: 3
+
+background:
+	arguments: [COLOR,IMAGE,POSITION/SIZE,REPEAT,ORIGIN,CLIP,ATTACHMENT]
+	animatable: true
+	version: 1
+
+border-bottom-color:
+	values: [COLOR,transparent]
+	version: 1
+
+border-bottom-left-radius:
+	arguments: [LENGTH|PERCENT,<LENGTH|PERCENT>]
+	animatable: true
+	version: 3
+
+border-bottom-right-radius:
+	arguments: [LENGTH|PERCENT,<LENGTH|PERCENT>]
+	animatable: true
+	version: 3
+
+border-bottom-style:
+	values: [none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset]
+	version: 1
+
+border-bottom-width:
+	values: [medium,thin,thick,LENGTH]
+	version: 1
+
+border-bottom:
+	arguments: [BORDER-WIDTH,BORDER-STYLE,BORDER-COLOR]
+	animatable: true
+	version: 1
+
+border-collapse:
+	values: [separate,collapse]
+	version: 2
+
+border-color:
+	values: [COLOR,transparent]
+	animatable: true
+	version: 1
+
+border-image-outset:
+	values: [LENGTH,NUMBER]
+	version: 3
+
+border-image-repeat:
+	values: [stretch,repeat,round]
+	version: 3
+
+border-image-slice:
+	values: [NUMBER,PERCENT,fill]
+	version: 3
+
+border-image-source:
+	values: [none,IMAGE]
+	version: 3
+
+border-image-width:
+	values: [NUMBER,PERCENT,auto]
+	version: 3
+
+border-image:
+	arguments: [SOURCE,SLICE,WIDTH,OUTSET,REPEAT]
+	version: 3
+
+border-left-color:
+	values: [COLOR,transparent]
+	animatable: true
+	version: 1
+
+border-left-style:
+	values: [none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset]
+	version: 1
+
+border-left-width:
+	values: [medium,thin,thick,LENGTH]
+	animatable: true
+	version: 1
+
+border-left:
+	arguments: [BORDER-WIDTH,BORDER-STYLE,BORDER-COLOR]
+	animatable: true
+	version: 1
+
+border-radius:
+	arguments: [1-4 LENGTH|PERCENT / 1-4 LENGTH|PERCENT]
+	version: 3
+
+border-right-color:
+	values: [COLOR,transparent]
+	version: 1
+
+border-right-style:
+	values:none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset
+	version: 1
+
+border-right-width:
+	values: [medium,thin,thick,LENGTH]
+	animatable: true
+	version: 1
+
+border-right:
+	arguments: [BORDER-WIDTH,BORDER-STYLE,BORDER-COLOR]
+	animatable: true
+	version: 1
+
+border-spacing:
+	values: [LENGTH]
+	animatable: true
+	version: 2
+
+border-style:
+	values: [none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset]
+	version: 1
+
+border-top-color:
+	values: [COLOR,transparent]
+	animatable: true
+	version: 1
+
+border-top-left-radius:
+	arguments: [LENGTH|PERCENT,<LENGTH|PERCENT>]
+	version: 3
+
+border-top-right-radius:
+	arguments: [LENGTH|PERCENT,<LENGTH|PERCENT>]
+	animatable: true
+	version: 3
+
+border-top-style:
+	values: [none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset]
+	version: 1
+
+border-top-width:
+	values: [medium,thin,thick,LENGTH]
+	animatable: true
+	version: 1
+
+border-top:
+	arguments: [BORDER-WIDTH,BORDER-STYLE,BORDER-COLOR]
+	animatable: true
+	version: 1
+
+border-width:
+	values: [medium,thin,thick,LENGTH]
+	version: 1
+
+border:
+	arguments: [BORDER-WIDTH,BORDER-STYLE,BORDER-COLOR]
+	animatable: true
+	version: 1
+
+bottom:
+	values: [auto,LENGTH]
+	animatable: true
+	version: 2
+
+box-decoration-break:
+	version: 3
+
+box-shadow:
+	arguments: [none|H-SHADOW V-SHADOW BLUR SPREAD COLOR |inset]
+	animatable: true
+	version: 3
+
+box-sizing:
+	values: [content-box,border-box]
+	version: 3
+
+break-after:
+	version: 3
+
+break-before:
+	version: 3
+
+break-inside:
+	version: 3
+
+caption-side:
+	values: [top,bottom]
+	version: 2
+
+clear:
+	values: [none,left,right,both]
+	version: 1
+
+clip:
+	values: [auto,SHAPE]
+	animatable: true
+	version: 2
+
+color:
+	values: [COLOR]
+	animatable: true
+	version: 1
+
+column-count:
+	values: [NUMBER,auto]
+	version: 3
+
+column-fill:
+	values: [balance,auto]
+	version: 3
+
+column-gap:
+	values: [LENGTH,normal]
+	animatable: true
+	version: 3
+
+column-rule-color:
+	values: [COLOR]
+	animatable: true
+	version: 3
+
+column-rule-style:
+	values: [none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset]
+	version: 3
+
+column-rule-width:
+	values: [medium,thin,thick,LENGTH]
+	animatable: true
+	version: 3
+
+column-rule:
+	arguments: [COLUMN-RULE-WIDTH,COLUMN-RULE-STYLE,COLUMN-RULE-COLOR]
+	animatable: true
+	version: 3
+
+column-span:
+	values: [1,all]
+	version: 3
+
+column-width:
+	values: [auto,LENGTH]
+	version: 3
+
+columns:
+	arguments: [auto|COLUMN-WIDTH COLUMN-COUNT]
+	animatable: true
+	version: 3
+
+content:
+	values: [normal,none,counter,attr,STRING,open-quote,close-quote,no-open-quote,no-close-quote,URL]
+	version: 2
+
+counter-increment:
+	values: [none,ID]
+	version: 2
+
+counter-reset:
+	arguments: [none|NAME NUMBER]
+	version: 2
+
+cursor:
+	values: [VALUE]
+	version: 2
+
+direction:
+	values: [ltr,rtl]
+	version: 2
+
+display:
+	values: [VALUE]
+	version: 1
+
+empty-cells:
+	values: [show,hide]
+	version: 2
+
+filter:
+	version: 3
+
+flex-basis:
+	values: [NUMBER,auto]
+	animatable: true
+	version: 3
+
+flex-direction:
+	values: [row,row-reverse,column,column-reverse]
+	version: 3
+
+flex-flow:
+	arguments: [FLEX-DIRECTION,FLEX-WRAP]
+	version: 3
+
+flex-grow:
+	values: [NUMBER]
+	animatable: true
+	version: 3
+
+flex-shrink:
+	values: [NUMBER]
+	animatable: true
+	version: 3
+
+flex-wrap:
+	values: [nowrap,wrap,wrap-reverse]
+	version: 3
+
+flex:
+	arguments: [FLEX-GROW FLEX-SHRINK FLEX-BASIS|auto]
+	animatable: true
+	version: 3
+
+float:
+	values: [none,left,right]
+	version: 1
+
+font-family:
+	values: [FONT]
+	version: 1
+
+font-feature-settings:
+	version: 3
+
+font-kerning:
+	version: 3
+
+font-language-override:
+	version: 3
+
+font-size-adjust:
+	values: [NUMBER,none]
+	animatable: true
+	version: 3
+
+font-size:
+	values: [medium,xx-small,x-small,small,large,x-large,xx-large,smaller,larger,LENGTH]
+	animatable: true
+	version: 1
+
+font-stretch:
+	values: [ultra-condensed,extra-condensed,condensed,semi-condensed,normal,semi-expanded,expanded,extra-expanded,ultra-expanded]
+	version: 3
+
+font-style:
+	values: [normal,italic,oblique]
+	version: 1
+
+font-synthesis:
+	version: 3
+
+font-variant-alternates:
+	version: 3
+
+font-variant-caps:
+	version: 3
+
+font-variant-east-asian:
+	version: 3
+
+font-variant-ligatures:
+	version: 3
+
+font-variant-numeric:
+	version: 3
+
+font-variant-position:
+	version: 3
+
+font-variant:
+	values: [normal,small-caps]
+	version: 1
+
+font-weight:
+	values: [normal,bold,bolder,lighter,NUMBER]
+	animatable: true
+	version: 1
+
+font:
+	arguments: [FONT-STYLE FONT-VARIANT FONT-WEIGHT FONT-SIZE/LINE-HEIGHT FONT-FAMILY|caption|icon|menu|message-box|small-caption|status-bar]
+	animatable: true
+	version: 1
+
+hanging-punctuation:
+	values: [none,first,last,allow-end,force-end]
+	version: 3
+
+height:
+	values: [auto,LENGTH]
+	animatable: true
+	version: 1
+
+hyphens:
+	version: 3
+
+image-orientation:
+	version: 3
+
+image-rendering:
+	version: 3
+
+image-resolution:
+	version: 3
+
+ime-mode:
+	version: 3
+
+justify-content:
+	values: [flex-start,flex-end,center,space-between,space-around]
+	version: 3
+
+left:
+	values: [auto,LENGTH]
+	animatable: true
+	version: 2
+
+letter-spacing:
+	values: [normal,LENGTH]
+	animatable: true
+	version: 1
+
+line-break:
+	version: 3
+
+line-height:
+	values: [normal,NUMBER,LENGTH]
+	animatable: true
+	version: 1
+
+list-style-image:
+	values: [none,URL]
+	version: 1
+
+list-style-position:
+	values: [inside,outside]
+	version: 1
+
+list-style-type:
+	values: [VALUE]
+	version: 1
+
+list-style:
+	arguments: [LIST-STYLE-TYPE,LIST-STYLE-POSITION,LIST-STYLE-IMAGE]
+	version: 1
+
+margin-bottom:
+	values: [LENGTH,auto]
+	animatable: true
+	version: 1
+
+margin-left:
+	values: [LENGTH,auto]
+	version: 1
+
+margin-right:
+	values: [LENGTH,auto]
+	animatable: true
+	version: 1
+
+margin-top:
+	values: [LENGTH,auto]
+	animatable: true
+	version: 1
+
+margin:
+	values: [LENGTH,auto]
+	animatable: true
+	version: 1
+
+mark-after:
+	version: 3
+
+mark-before:
+	version: 3
+
+mark:
+	version: 3
+
+marks:
+	version: 3
+
+marquee-direction:
+	version: 3
+
+marquee-play-count:
+	version: 3
+
+marquee-speed:
+	version: 3
+
+marquee-style:
+	version: 3
+
+mask-type:
+	version: 3
+
+mask:
+	version: 3
+
+max-height:
+	values: [none,LENGTH]
+	animatable: true
+	version: 2
+
+max-width:
+	values: [none,LENGTH]
+	animatable: true
+	version: 2
+
+min-height:
+	values: [LENGTH]
+	animatable: true
+	version: 2
+
+min-width:
+	values: [LENGTH]
+	version: 2
+
+nav-down:
+	values: [auto,ID,TARGET-NAME]
+	version: 3
+
+nav-index:
+	values: [auto,NUMBER]
+	version: 3
+
+nav-left:
+	values: [auto,ID,TARGET-NAME]
+	version: 3
+
+nav-right:
+	values: [auto,ID,TARGET-NAME]
+	version: 3
+
+nav-up:
+	values: [auto,ID,TARGET-NAME]
+	version: 3
+
+object-fit:
+	version: 3
+
+object-position:
+	version: 3
+
+opacity:
+	values: [NUMBER]
+	animatable: true
+	version: 3
+
+order:
+	values: [NUMBER]
+	animatable: true
+	version: 3
+
+orphans:
+	version: 2
+
+outline-color:
+	values: [invert,COLOR]
+	animatable: true
+	version: 2
+
+outline-offset:
+	values: [LENGTH]
+	animatable: true
+	version: 3
+
+outline-style:
+	values: [none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset]
+	version: 2
+
+outline-width:
+	values: [medium,thin,thick,LENGTH]
+	animatable: true
+	version: 2
+
+outline:
+	arguments: [OUTLINE-COLOR,OUTLINE-STYLE,OUTLINE-WIDTH]
+	animatable: true
+	version: 2
+
+overflow-wrap:
+	version: 3
+
+overflow-x:
+	values: [visible,hidden,scroll,auto]
+	version: 3
+
+overflow-y:
+	values: [visible,hidden,scroll,auto]
+	version: 3
+
+overflow:
+	values: [visible,hidden,scroll,auto]
+	version: 2
+
+padding-bottom:
+	values: [LENGTH]
+	version: 1
+
+padding-left:
+	values: [LENGTH]
+	animatable: true
+	version: 1
+
+padding-right:
+	values: [LENGTH]
+	animatable: true
+	version: 1
+
+padding-top:
+	values: [LENGTH]
+	animatable: true
+	version: 1
+
+padding:
+	values: [LENGTH]
+	animatable: true
+	version: 1
+
+page-break-after:
+	values: [auto,always,avoid,left,right]
+	version: 2
+
+page-break-before:
+	values: [auto,always,avoid,left,right]
+	version: 2
+
+page-break-inside:
+	values: [auto,avoid]
+	version: 2
+
+perspective	3D:
+	version: 3
+
+perspective-origin:
+	arguments: [X-AXIS,Y-AXIS]
+	animatable: true
+	version: 3
+
+perspective:
+	values: [LENGTH,none]
+
+phonemes:
+	version: 3
+
+position:
+	values: [static,absolute,fixed,relative]
+	version: 2
+
+quotes:
+	values: [none,STRING]
+	version: 2
+
+resize:
+	values: [none,both,horizontal,vertical]
+	version: 3
+
+rest-after:
+	version: 3
+
+rest-before:
+	version: 3
+
+rest:
+	version: 3
+
+right:
+	values: [auto,LENGTH]
+	animatable: true
+	version: 2
+
+tab-size:
+	values: [NUMBER,LENGTH]
+	version: 3
+
+table-layout:
+	values: [auto,fixed]
+	version: 2
+
+text-align-last:
+	values: [auto,left,right,center,justify,start,end]
+	version: 3
+
+text-align:
+	values: [left,right,center,justify]
+	version: 1
+
+text-combine-upright:
+	version: 3
+
+text-decoration-color:
+	values: [COLOR]
+	version: 3
+
+text-decoration-line:
+	values: [none,underline,overline,line-through]
+	version: 3
+
+text-decoration-style:
+	values: [solid,double,dotted,dashed,wavy]
+	version: 3
+
+text-decoration:
+	values: [none,underline,overline,line-through]
+	version: 1
+
+text-indent:
+	values: [LENGTH]
+	animatable: true
+	version: 1
+
+text-justify:
+	values: [auto,inter-word,inter-ideograph,inter-cluster,distribute,kashida,trim]
+	version: 3
+
+text-orientation:
+	version: 3
+
+text-overflow:
+	values: [clip,ellipsis,STRING]
+	version: 3
+
+text-shadow:
+	arguments: [H-SHADOW V-SHADOW BLUR-RADIUS COLOR|none]
+	animatable: true
+	version: 3
+
+text-transform:
+	values: [none,capitalize,uppercase,lowercase]
+	version: 1
+
+text-underline-position:
+	version: 3
+
+top:
+	values: [auto,LENGTH]
+	animatable: true
+	version: 2
+
+transform-origin:
+	arguments: [X-AXIS,Y-AXIS,Z-AXIS]
+	animatable: true
+	version: 3
+
+transform-style:
+	values: [flat,preserve-3d]
+	version: 3
+
+transform:
+	values: [none,TRANSFORM-FUNCTIONS]
+	animatable: true
+	version: 3
+
+transition-delay:
+	values: [TIME]
+	version: 3
+
+transition-duration:
+	values: [TIME]
+	version: 3
+
+transition-property:
+	values: [none,all,PROPERTY]
+	version: 3
+
+transition-timing-function:
+	values: [ease,linear,ease-in,ease-out,ease-in-out,cubic-bezier()]
+	version: 3
+
+transition:
+	arguments: [PROPERTY,DURATION,TIMING-FUNCTION,DELAY]
+	version: 3
+
+unicode-bidi:
+	values: [normal,embed,bidi-override]
+	version: 2
+
+vertical-align:
+	values: [baseline,LENGTH,sub,super,top,text-top,middle,bottom,text-bottom]
+	version: 1
+
+visibility:
+	values: [visible,hidden,collapse]
+	animatable: true
+	version: 2
+
+voice-balance:
+	version: 3
+
+voice-duration:
+	version: 3
+
+voice-pitch-range:
+	version: 3
+
+voice-pitch:
+	version: 3
+
+voice-rate:
+	version: 3
+
+voice-stress:
+	version: 3
+
+voice-volume:
+	version: 3
+
+white-space:
+	values: [normal,nowrap,pre,pre-line,pre-wrap]
+	version: 1
+
+widows:
+	version: 2
+
+width:
+	values: [auto,VALUE]
+	animatable: true
+	version: 1
+
+word-break:
+	values: [normal,break-all,keep-all]
+	version: 3
+
+word-spacing:
+	values: [normal,LENGTH]
+	animatable: true
+	version: 1
+
+word-wrap:
+	values: [normal,break-word]
+	version: 3
+
+writing-mode:
+	version: 3
+
+z-index:
+	values: [auto,NUMBER]
+	animatable: true
+	version: 2

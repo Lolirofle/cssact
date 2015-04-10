@@ -29,26 +29,55 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 	let mut output = String::new();
 
 	while let Ok(i) = parser.next(){
-		output.push_str(&*i.to_css_string());
-
 		match i{
-			block @ css::Token::ParenthesisBlock |
-			block @ css::Token::CurlyBracketBlock |
-			block @ css::Token::SquareBracketBlock => parser.parse_nested_block(|parser|{
+			//Blocks/brackets
+			ref block @ css::Token::ParenthesisBlock |
+			ref block @ css::Token::CurlyBracketBlock |
+			ref block @ css::Token::SquareBracketBlock => match parser.parse_nested_block(|parser|{
+				//Open bracket
+				output.push_str(&*i.to_css_string());
+
+				//Bracket contents
 				while let Ok(i) = parser.next(){
-					output.push_str(&*i.to_css_string());
+					match i{
+						//Handling zero. Remove unit and fraction from 0 (https://developer.mozilla.org/en-US/docs/Web/CSS/length)
+						css::Token::Dimension(number @ css::NumericValue{int_value: Some(0),..},_) => {
+							output.push_str(&*css::Token::Number(number).to_css_string());
+						},
+						css::Token::Dimension(mut number @ css::NumericValue{value: 0.0,..},_) |
+						css::Token::Number(mut number @ css::NumericValue{value: 0.0,..})=> {
+							number.int_value = Some(0);
+							output.push_str(&*css::Token::Number(number).to_css_string());
+						},
+
+						//css::Token::Hash(value) => {},
+
+						//All other tokens
+						token => output.push_str(&*token.to_css_string())
+					}
 				}
 
+				//Close bracket
 				output.push_str(&*match block{
-					css::Token::ParenthesisBlock   => css::Token::CloseParenthesis,
-					css::Token::CurlyBracketBlock  => css::Token::CloseCurlyBracket,
-					css::Token::SquareBracketBlock => css::Token::CloseSquareBracket,
+					&css::Token::ParenthesisBlock   => css::Token::CloseParenthesis,
+					&css::Token::CurlyBracketBlock  => css::Token::CloseCurlyBracket,
+					&css::Token::SquareBracketBlock => css::Token::CloseSquareBracket,
 					_ => unreachable!()
 				}.to_css_string());
 
 				Ok(())
-			}).unwrap(),
-			_ => {}
+			}){
+				Ok(_)  => {},
+				Err(_) => {
+       				 context.span_err(span,"unexpected token somewhere");
+					return DummyResult::any(span);
+				}
+			},
+
+			//All other tokens
+			token => {
+				output.push_str(&*token.to_css_string());
+			}
 		};
 	}
 
