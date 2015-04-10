@@ -1,0 +1,11 @@
+[package]
+name = "csspp"
+version = "0.0.1"
+authors = ["Lolirofle <lolipopple@hotmail.com>"]
+
+[dependencies.cssparser]
+git = "https://github.com/servo/rust-cssparser.git"
+
+[lib]
+name = "csspp"
+plugin = true
