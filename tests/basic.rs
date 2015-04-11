@@ -18,15 +18,15 @@
 
 #[test]fn url(){
 	assert_eq!(
-		css!("*{background: url(http://example.org/bg.jpg)}"),
-		"*{background:url(\"http://example.org/bg.jpg\")}"
+		css!("*{background: url(http://example.org/bg.jpg);}"),
+		"*{background:url(\"http://example.org/bg.jpg\");}"
 	);
 }
 
 #[test]fn content_before(){
 	assert_eq!(
-		css!("a:before{content: \"Yeah\"}"),
-		"a:before{content:\"Yeah\"}"
+		css!("a:before{content: \"Yeah\";}"),
+		"a:before{content:\"Yeah\";}"
 	);
 }
 
@@ -58,11 +58,11 @@
 #[test]fn multiple_value_rule(){
 	assert_eq!(
 		css!("a{background: black url(http://example.org/bg.jpg);}"),
-		"a{background:black url(http://example.org/bg.jpg);}"
+		"a{background:black url(\"http://example.org/bg.jpg\");}"
 	);
 }
 
-/*#[test]fn hex_colors(){
+#[test]fn hex_colors(){
 	assert_eq!(
 		css!("a{
 			color: #19F;
@@ -74,7 +74,7 @@
 		}"),
 		"a{color:#19F;color:#19F;color:#102233;color:#112033;color:#112230;color:#ABC;}"
 	);
-}*/
+}
 
 //#[test]fn f01(){assert_eq!(css!(include_str!("css/comments.css"       )),include_str!("css/comments.min.css"       ));}
 //#[test]fn f02(){assert_eq!(css!(include_str!("css/hacks.css"          )),include_str!("css/hacks.min.css"          ));}

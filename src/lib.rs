@@ -4,15 +4,17 @@ extern crate syntax;
 extern crate rustc;
 extern crate cssparser as css;
 
-use css::ToCss;
 use syntax::ast;
 use syntax::codemap::Span;
 use syntax::ext::base::{ExtCtxt,MacEager,MacResult,DummyResult};
 use syntax::ext::build::AstBuilder;
-use syntax::parse::token;
+use syntax::parse::token as rust_token;
 use syntax::print::pprust;
 use syntax::fold::Folder;
 use rustc::plugin::Registry;
+
+mod token;
+mod parse;
 
 #[plugin_registrar]
 pub fn plugin_registrar(reg: &mut Registry){
@@ -28,7 +30,14 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 	let mut parser = css::Parser::new(&*input);
 	let mut output = String::new();
 
-	while let Ok(i) = parser.next(){
+	for rule in css::RuleListParser::new_for_stylesheet(&mut parser,parse::RuleParser){
+		match rule{
+			Ok(rule_str) => output.push_str(&*rule_str),
+			Err(_) => {}
+		}
+	}
+
+	/*while let Ok(i) = parser.next(){
 		match i{
 			//Blocks/brackets
 			ref block @ css::Token::ParenthesisBlock |
@@ -38,23 +47,8 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 				output.push_str(&*i.to_css_string());
 
 				//Bracket contents
-				while let Ok(i) = parser.next(){
-					match i{
-						//Handling zero. Remove unit and fraction from 0 (https://developer.mozilla.org/en-US/docs/Web/CSS/length)
-						css::Token::Dimension(number @ css::NumericValue{int_value: Some(0),..},_) => {
-							output.push_str(&*css::Token::Number(number).to_css_string());
-						},
-						css::Token::Dimension(mut number @ css::NumericValue{value: 0.0,..},_) |
-						css::Token::Number(mut number @ css::NumericValue{value: 0.0,..})=> {
-							number.int_value = Some(0);
-							output.push_str(&*css::Token::Number(number).to_css_string());
-						},
-
-						//css::Token::Hash(value) => {},
-
-						//All other tokens
-						token => output.push_str(&*token.to_css_string())
-					}
+				while let Ok(token) = parser.next(){
+					output.push_str(&*token::value_token_simplify(token).to_css_string());
 				}
 
 				//Close bracket
@@ -79,9 +73,9 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 				output.push_str(&*token.to_css_string());
 			}
 		};
-	}
+	}*/
 
-	MacEager::expr(context.expr_str(span,token::intern_and_get_ident(&*output)))
+	MacEager::expr(context.expr_str(span,rust_token::intern_and_get_ident(&*output)))
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -124,7 +118,7 @@ fn parse_single_string_literal(cx: &mut ExtCtxt, tts: &[ast::TokenTree]) -> Opti
             return None
         }
     };
-    if !parser.eat(&token::Eof)/*.ok().unwrap()*/ {
+    if !parser.eat(&rust_token::Eof)/*.ok().unwrap()*/ {
         cx.span_err(parser.span, "only one string literal allowed");
         return None;
     }
