@@ -48,6 +48,13 @@
 	);
 }
 
+#[test]fn selectors(){
+	assert_eq!(
+		css!(".a #div . span{color:green;}"),
+		".a #div .span{color:green;}"
+	);
+}
+
 #[test]fn adjacent_selector(){
 	assert_eq!(
 		css!("a + div span{color:green;}"),

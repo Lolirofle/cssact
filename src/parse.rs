@@ -18,10 +18,38 @@ impl css::QualifiedRuleParser for RuleParser{
 	//When parsing the selector
 	fn parse_prelude(&self,input: &mut css::Parser) -> Result<<Self as css::QualifiedRuleParser>::Prelude,()>{
 		let mut out = String::new();
+		let mut previous_token = css::Token::Semicolon;
 
 		//For every selector token
-		while let Ok(token) = input.next/*_including_whitespace*/(){
-			out.push_str(&token.to_css_string());
+		while let Ok(token) = input.next_including_whitespace(){
+			match (&previous_token,&token){
+				//Whitespace after an identifier: Register the token in case it is a descendant operator
+				(&css::Token::Ident(_),&css::Token::WhiteSpace(_)) |
+				(&css::Token::IDHash(_),&css::Token::WhiteSpace(_)) => {},
+
+				//All other whitespaces: Ignore
+				(_,&css::Token::WhiteSpace(_)) => continue,
+
+				//Unary operator after a whitespace: Previous whitespace was a descendant operator
+				(&css::Token::WhiteSpace(_),&css::Token::Ident(_))|
+				(&css::Token::WhiteSpace(_),&css::Token::IDHash(_)) |
+				(&css::Token::WhiteSpace(_),&css::Token::Delim('.')) |
+				(&css::Token::WhiteSpace(_),&css::Token::Colon) => {
+					//Write the previously skipped whitespace token using a single whitespace for saving space
+					out.push_str(" ");
+
+					//Write the token
+					out.push_str(&token.to_css_string());
+				},
+
+				_ => {
+					//Write the token
+					out.push_str(&token.to_css_string());
+				}
+			};
+
+			//Update the register
+			previous_token = token;
 		}
 
 		Ok(out)
