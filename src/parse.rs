@@ -94,7 +94,7 @@ impl css::DeclarationParser for DeclParser{
 			out.push_str(&token::value_token_simplify(token).to_css_string());
 
 			//For every other value (tail)
-			while let Ok(token) = input.next(){
+			while let Ok(token) = input.next(){//TODO: Comma and font names, see test f04
 				out.push_str(" ");
 				out.push_str(&token::value_token_simplify(token).to_css_string());
 			}

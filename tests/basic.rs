@@ -87,10 +87,10 @@
 //#[test]fn f02(){assert_eq!(css!(include_str!("css/hacks.css"          )),include_str!("css/hacks.min.css"          ));}
 //#[test]fn f03(){assert_eq!(css!(include_str!("css/issue62.css"        )),include_str!("css/issue62.min.css"        ));}
 //#[test]fn f04(){assert_eq!(css!(include_str!("css/issue210.css"       )),include_str!("css/issue210.min.css"       ));}
-//#[test]fn f05(){assert_eq!(css!(include_str!("css/paths_prepend.css"  )),include_str!("css/paths_prepend.min.css"  ));}
-//#[test]fn f06(){assert_eq!(css!(include_str!("css/paths_rewrite.css"  )),include_str!("css/paths_rewrite.min.css"  ));}
-//#[test]fn f07(){assert_eq!(css!(include_str!("css/selectors.css"      )),include_str!("css/selectors.min.css"      ));}
-//#[test]fn f08(){assert_eq!(css!(include_str!("css/styles.css"         )),include_str!("css/styles.min.css"         ));}
-//#[test]fn f09(){assert_eq!(css!(include_str!("css/subsilver.css"      )),include_str!("css/subsilver.min.css"      ));}
-//#[test]fn f10(){assert_eq!(css!(include_str!("css/unusual_strings.css")),include_str!("css/unusual_strings.min.css"));}
+/*TODO: @ rules*///#[test]fn f05(){assert_eq!(css!(include_str!("css/paths_prepend.css"  )),include_str!("css/paths_prepend.min.css"  ));}
+/*TODO: @ rules*///#[test]fn f06(){assert_eq!(css!(include_str!("css/paths_rewrite.css"  )),include_str!("css/paths_rewrite.min.css"  ));}
+/*TODO: WHat happens here?*///#[test]fn f07(){assert_eq!(css!(include_str!("css/selectors.css"      )),include_str!("css/selectors.min.css"      ));}
+/*TODO: @ rules*///#[test]fn f08(){assert_eq!(css!(include_str!("css/styles.css"         )),include_str!("css/styles.min.css"         ));}
+/*TODO: Same problem as f07*///#[test]fn f09(){assert_eq!(css!(include_str!("css/subsilver.css"      )),include_str!("css/subsilver.min.css"      ));}
+/*TODO: Square brackets isn't parsed. May be same problem as f07 and f09*///#[test]fn f10(){assert_eq!(css!(include_str!("css/unusual_strings.css")),include_str!("css/unusual_strings.min.css"));}
 //#[test]fn f11(){assert_eq!(css!(include_str!("css/vladmirated.css"    )),include_str!("css/vladmirated.min.css"    ));}

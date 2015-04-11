@@ -22,9 +22,9 @@ pub fn plugin_registrar(reg: &mut Registry){
 }
 
 fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::TokenTree]) -> Box<MacResult + 'context>{
-	let input = match parse_single_string_literal(context,tts){
-		Some(s) => s,
-		None => return DummyResult::any(span)
+	let (input,input_span) = match parse_single_string_literal(context,tts){
+		(Some(s),span) => (s,span),
+		(None,span) => return DummyResult::any(span)
 	};
 
 	let mut parser = css::Parser::new(&input);
@@ -33,9 +33,17 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 	for rule in css::RuleListParser::new_for_stylesheet(&mut parser,parse::RuleParser){
 		match rule{
 			Ok(rule_str) => output.push_str(&rule_str),
-			Err(info) => {
-				context.span_err(span,&format!("{:?}",info));
-				return DummyResult::any(span);
+			Err(pos) => {
+				let parser = css::Parser::new(&input);
+				let start_location = parser.source_location(pos.start);
+				let end_location   = parser.source_location(pos.end);
+				context.span_err(input_span,&format!("CSS parsing error @ {}:{} to {}:{}",
+					start_location.line,
+					start_location.column,
+					end_location.line,
+					end_location.column,
+				));
+				return DummyResult::any(input_span);
 			}
 		}
 	}
@@ -61,7 +69,7 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 ////////////////////////////////////////////////////////////////////
 /// Looks for a single string literal and returns it.
 /// Otherwise, logs an error with cx.span_err and returns None.
-fn parse_single_string_literal(cx: &mut ExtCtxt, tts: &[ast::TokenTree]) -> Option<String> {
+fn parse_single_string_literal(cx: &mut ExtCtxt, tts: &[ast::TokenTree]) -> (Option<String>,Span) {
     let mut parser = cx.new_parser_from_tts(tts);
     let entry = cx.expander().fold_expr(parser.parse_expr());
     let regex = match entry.node {
@@ -72,7 +80,7 @@ fn parse_single_string_literal(cx: &mut ExtCtxt, tts: &[ast::TokenTree]) -> Opti
                     cx.span_err(entry.span, &format!(
                         "expected string literal but got `{}`",
                         pprust::lit_to_string(&**lit)));
-                    return None
+                    return (None,entry.span)
                 }
             }
         }
@@ -80,12 +88,12 @@ fn parse_single_string_literal(cx: &mut ExtCtxt, tts: &[ast::TokenTree]) -> Opti
             cx.span_err(entry.span, &format!(
                 "expected string literal but got `{}`",
                 pprust::expr_to_string(&*entry)));
-            return None
+            return (None,entry.span)
         }
     };
     if !parser.eat(&rust_token::Eof)/*.ok().unwrap()*/ {
         cx.span_err(parser.span, "only one string literal allowed");
-        return None;
+        return (None,parser.span);
     }
-    Some(regex)
+    (Some(regex),entry.span)
 }
