@@ -37,44 +37,6 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 		}
 	}
 
-	/*while let Ok(i) = parser.next(){
-		match i{
-			//Blocks/brackets
-			ref block @ css::Token::ParenthesisBlock |
-			ref block @ css::Token::CurlyBracketBlock |
-			ref block @ css::Token::SquareBracketBlock => match parser.parse_nested_block(|parser|{
-				//Open bracket
-				output.push_str(&*i.to_css_string());
-
-				//Bracket contents
-				while let Ok(token) = parser.next(){
-					output.push_str(&*token::value_token_simplify(token).to_css_string());
-				}
-
-				//Close bracket
-				output.push_str(&*match block{
-					&css::Token::ParenthesisBlock   => css::Token::CloseParenthesis,
-					&css::Token::CurlyBracketBlock  => css::Token::CloseCurlyBracket,
-					&css::Token::SquareBracketBlock => css::Token::CloseSquareBracket,
-					_ => unreachable!()
-				}.to_css_string());
-
-				Ok(())
-			}){
-				Ok(_)  => {},
-				Err(_) => {
-       				 context.span_err(span,"unexpected token somewhere");
-					return DummyResult::any(span);
-				}
-			},
-
-			//All other tokens
-			token => {
-				output.push_str(&*token.to_css_string());
-			}
-		};
-	}*/
-
 	MacEager::expr(context.expr_str(span,rust_token::intern_and_get_ident(&*output)))
 }
 
