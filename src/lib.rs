@@ -16,6 +16,12 @@ use rustc::plugin::Registry;
 mod token;
 mod parse;
 
+//TODO: Option to issue a warning instead of an error
+//TODO: Option to stop at the first error or enumerate all of them
+//TODO: Parse the values syntax for each property type in a declaration
+//TODO: Shorten color values by comparing the representations (Color name, its rgb(a) string, hex value...) and look for the shortest one
+//TODO: Option to just check for errors
+
 #[plugin_registrar]
 pub fn plugin_registrar(reg: &mut Registry){
 	reg.register_macro("css",expand_css);
@@ -30,11 +36,12 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 	let mut parser = css::Parser::new(&input);
 	let mut output = String::new();
 
+	//For every rule
 	for rule in css::RuleListParser::new_for_stylesheet(&mut parser,parse::RuleParser){
 		match rule{
 			Ok(rule_str) => output.push_str(&rule_str),
 			Err(pos) => {
-				let parser = css::Parser::new(&input);
+				let parser = css::Parser::new(&input);//TODO: Find a method for using the old parser
 				let start_location = parser.source_location(pos.start);
 				let end_location   = parser.source_location(pos.end);
 				context.span_err(input_span,&format!("CSS parsing error @ {}:{} to {}:{}",
@@ -48,6 +55,7 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 		}
 	}
 
+	//Return the expression, making the macro expand to a string literal
 	MacEager::expr(context.expr_str(span,rust_token::intern_and_get_ident(&output)))
 }
 

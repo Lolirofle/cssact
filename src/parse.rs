@@ -24,16 +24,22 @@ impl css::QualifiedRuleParser for RuleParser{
 		while let Ok(token) = input.next_including_whitespace(){
 			match (&previous_token,&token){
 				//Whitespace after an identifier: Register the token in case it is a descendant operator
-				(&css::Token::Ident(_),&css::Token::WhiteSpace(_)) |
-				(&css::Token::IDHash(_),&css::Token::WhiteSpace(_)) => {},
+				(&css::Token::Delim('*')        ,&css::Token::WhiteSpace(_)) |
+				(&css::Token::Ident(_)          ,&css::Token::WhiteSpace(_)) |
+				(&css::Token::IDHash(_)         ,&css::Token::WhiteSpace(_)) |
+				(&css::Token::Function(_)       ,&css::Token::WhiteSpace(_)) |
+				(&css::Token::SquareBracketBlock,&css::Token::WhiteSpace(_)) => {},
 
 				//All other whitespaces: Ignore
 				(_,&css::Token::WhiteSpace(_)) => continue,
 
 				//Unary operator after a whitespace: Previous whitespace was a descendant operator
-				(&css::Token::WhiteSpace(_),&css::Token::Ident(_))|
-				(&css::Token::WhiteSpace(_),&css::Token::IDHash(_)) |
-				(&css::Token::WhiteSpace(_),&css::Token::Delim('.')) |
+				(&css::Token::WhiteSpace(_),&css::Token::Delim('*'))         |
+				(&css::Token::WhiteSpace(_),&css::Token::Ident(_))           |
+				(&css::Token::WhiteSpace(_),&css::Token::IDHash(_))          |
+				(&css::Token::WhiteSpace(_),&css::Token::Delim('.'))         |
+				(&css::Token::WhiteSpace(_),&css::Token::SquareBracketBlock) |
+				(&css::Token::WhiteSpace(_),&css::Token::Function(_))        |
 				(&css::Token::WhiteSpace(_),&css::Token::Colon) => {
 					//Write the previously skipped whitespace token using a single whitespace for saving space
 					out.push_str(" ");
@@ -48,6 +54,26 @@ impl css::QualifiedRuleParser for RuleParser{
 				}
 			};
 
+			match &token{//TODO: Remove quotes when unneccessary, and issue an error when it is required
+				//Square bracket blocks: Selector attributes
+				block @ &css::Token::SquareBracketBlock |
+				block @ &css::Token::Function(_)        => try!(input.parse_nested_block(|input|{
+					//Bracket contents
+					while let Ok(token) = input.next(){
+						out.push_str(&*token::value_token_simplify(token).to_css_string());
+					}
+
+					//Close bracket
+					out.push_str(&*match block{
+						&css::Token::Function(_)        => css::Token::CloseParenthesis,
+						&css::Token::SquareBracketBlock => css::Token::CloseSquareBracket,
+						_ => unreachable!()
+					}.to_css_string());
+					Ok(())
+				})),
+				_ => {}
+			}
+
 			//Update the register
 			previous_token = token;
 		}
@@ -60,11 +86,17 @@ impl css::QualifiedRuleParser for RuleParser{
 		//Block begin
 		prelude.push_str("{");
 
-		//For every declaration
-		for decl in css::DeclarationListParser::new(input,DeclParser){
-			match decl{
-				Ok(decl) => prelude.push_str(&decl),
-				Err(_)   => return Err(())
+		//Declarations
+		let mut decls = css::DeclarationListParser::new(input,DeclParser);
+
+		//For the first declaration (head)
+		if let Some(decl) = decls.next(){
+			prelude.push_str(&*try!(decl.map_err(|_| ())));
+
+			//For every other declaration (tail)
+			for decl in decls{
+				prelude.push_str(";");
+				prelude.push_str(&*try!(decl.map_err(|_| ())));
 			}
 		}
 
@@ -99,7 +131,6 @@ impl css::DeclarationParser for DeclParser{
 				out.push_str(&token::value_token_simplify(token).to_css_string());
 			}
 		}
-		out.push_str(";");
 		Ok(out)
 	}
 }
