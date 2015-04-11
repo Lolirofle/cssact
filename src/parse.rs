@@ -39,7 +39,6 @@ impl css::QualifiedRuleParser for RuleParser{
 				(&css::Token::WhiteSpace(_),&css::Token::IDHash(_))          |
 				(&css::Token::WhiteSpace(_),&css::Token::Delim('.'))         |
 				(&css::Token::WhiteSpace(_),&css::Token::SquareBracketBlock) |
-				(&css::Token::WhiteSpace(_),&css::Token::Function(_))        |
 				(&css::Token::WhiteSpace(_),&css::Token::Colon) => {
 					//Write the previously skipped whitespace token using a single whitespace for saving space
 					out.push_str(" ");
@@ -98,6 +97,9 @@ impl css::QualifiedRuleParser for RuleParser{
 				prelude.push_str(";");
 				prelude.push_str(&*try!(decl.map_err(|_| ())));
 			}
+		}else{
+			//Empty declaration
+			return Ok(String::new())
 		}
 
 		//Block end

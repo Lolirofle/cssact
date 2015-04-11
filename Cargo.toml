@@ -1,5 +1,5 @@
 [package]
-name = "csspp"
+name = "cssact"
 version = "0.0.1"
 authors = ["Lolirofle <lolipopple@hotmail.com>"]
 
@@ -7,5 +7,5 @@ authors = ["Lolirofle <lolipopple@hotmail.com>"]
 git = "https://github.com/servo/rust-cssparser.git"
 
 [lib]
-name = "csspp"
+name = "cssact"
 plugin = true

@@ -1,6 +1,6 @@
 #![feature(plugin)]
 
-#![plugin(csspp)]
+#![plugin(cssact)]
 
 #[test]fn basic(){
 	assert_eq!(
@@ -11,8 +11,8 @@
 
 #[test]fn multiple(){
 	assert_eq!(
-		css!("  div  {  color: green;   }   span{color:red;}"),
-		"div{color:green}span{color:red}"
+		css!("  div  {  color: green;   }   span{color:red;}a{color:blue;}"),
+		"div{color:green}span{color:red}a{color:blue}"
 	);
 }
 
@@ -85,14 +85,28 @@
 
 #[test]fn square_bracket_selector(){
 	assert_eq!(
-		css!("a[ id = \"b\" ] [id=\"c\"] a [class=\"d\"][data-shit=\"e\"]{}"),
-		"a[id=\"b\"] [id=\"c\"] a [class=\"d\"][data-shit=\"e\"]{}"
+		css!("a[ id = \"b\" ] [id=\"c\"] a [class=\"d\"][data-shit=\"e\"]{color:teal;}"),
+		"a[id=\"b\"] [id=\"c\"] a [class=\"d\"][data-shit=\"e\"]{color:teal}"
 	);
 }
 
-//#[test]fn f01(){assert_eq!(css!(include_str!("css/comments.css"       )),include_str!("css/comments.min.css"       ));}
+#[test]fn semicolons(){
+	assert_eq!(
+		css!("a{  ;  ;    ;   ;;;color   :     green;;;;;; ;; ;}"),
+		"a{color:green}"
+	);
+}
+
+#[test]fn empty_declarations(){
+	assert_eq!(
+		css!("a{  ;  ;    ;   ;;;           ;;;;;; ;; ;}b{}c{     }d{;}"),
+		""
+	);
+}
+
+/*TODO: Support for YUI compressor style comments?*///#[test]fn f01(){assert_eq!(css!(include_str!("css/comments.css"       )),include_str!("css/comments.min.css"       ));}
 /*TODO: @ rules*///#[test]fn f02(){assert_eq!(css!(include_str!("css/hacks.css"          )),include_str!("css/hacks.min.css"          ));}
-//#[test]fn f03(){assert_eq!(css!(include_str!("css/issue62.css"        )),include_str!("css/issue62.min.css"        ));}
+/*TODO: Color shortening and f04 problems*///#[test]fn f03(){assert_eq!(css!(include_str!("css/issue62.css"        )),include_str!("css/issue62.min.css"        ));}
 /*TODO: Font family whitespace*///#[test]fn f04(){assert_eq!(css!(include_str!("css/issue210.css"       )),include_str!("css/issue210.min.css"       ));}
 /*TODO: @ rules*///#[test]fn f05(){assert_eq!(css!(include_str!("css/paths_prepend.css"  )),include_str!("css/paths_prepend.min.css"  ));}
 /*TODO: @ rules*///#[test]fn f06(){assert_eq!(css!(include_str!("css/paths_rewrite.css"  )),include_str!("css/paths_rewrite.min.css"  ));}
@@ -101,3 +115,7 @@
 /*TODO: Same problem as f07*///#[test]fn f09(){assert_eq!(css!(include_str!("css/subsilver.css"      )),include_str!("css/subsilver.min.css"      ));}
 /*TODO: Newline in string*///#[test]fn f10(){assert_eq!(css!(include_str!("css/unusual_strings.css")),include_str!("css/unusual_strings.min.css"));}
 //#[test]fn f11(){assert_eq!(css!(include_str!("css/vladmirated.css"    )),include_str!("css/vladmirated.min.css"    ));}
+#[test]fn f12(){assert_eq!(css!(include_str!("css/box_model_hack.css"          )),include_str!("css/box_model_hack.min.css"          ));}
+#[test]fn f13(){assert_eq!(css!(include_str!("css/backslash_hack.css"          )),include_str!("css/backslash_hack.min.css"          ));}
+#[test]fn f14(){assert_eq!(css!(include_str!("css/underscore_hack.css"         )),include_str!("css/underscore_hack.min.css"         ));}
+#[test]fn f15(){assert_eq!(css!(include_str!("css/commented_backslash_hack.css")),include_str!("css/commented_backslash_hack.min.css"));}

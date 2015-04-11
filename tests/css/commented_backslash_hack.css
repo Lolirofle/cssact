@@ -1,0 +1,11 @@
+/* begin hiding from IE5 Mac \*/
+.test {
+  color: red;
+}
+/* end */
+
+/* apply ONLY to IE5 Mac \*//*/
+.test {
+  color: red;
+}
+/* end */

@@ -99,7 +99,7 @@ fn parse_single_string_literal(cx: &mut ExtCtxt, tts: &[ast::TokenTree]) -> (Opt
             return (None,entry.span)
         }
     };
-    if !parser.eat(&rust_token::Eof)/*.ok().unwrap()*/ {
+    if !parser.eat(&rust_token::Eof).ok().unwrap() {
         cx.span_err(parser.span, "only one string literal allowed");
         return (None,parser.span);
     }
