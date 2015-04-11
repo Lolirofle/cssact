@@ -16,6 +16,6 @@ pub fn value_token_simplify(token: css::Token) -> css::Token{match token{
 	//TODO: 0% = 0? Always true?
 	//TODO: Pre-calculated calc(..)
 
-	//All other tokens
+	//All other tokens cannot be simplified
 	token => token
 }}

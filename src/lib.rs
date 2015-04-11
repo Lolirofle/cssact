@@ -27,17 +27,20 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 		None => return DummyResult::any(span)
 	};
 
-	let mut parser = css::Parser::new(&*input);
+	let mut parser = css::Parser::new(&input);
 	let mut output = String::new();
 
 	for rule in css::RuleListParser::new_for_stylesheet(&mut parser,parse::RuleParser){
 		match rule{
-			Ok(rule_str) => output.push_str(&*rule_str),
-			Err(_) => {}
+			Ok(rule_str) => output.push_str(&rule_str),
+			Err(info) => {
+				context.span_err(span,&format!("{:?}",info));
+				return DummyResult::any(span);
+			}
 		}
 	}
 
-	MacEager::expr(context.expr_str(span,rust_token::intern_and_get_ident(&*output)))
+	MacEager::expr(context.expr_str(span,rust_token::intern_and_get_ident(&output)))
 }
 
 ////////////////////////////////////////////////////////////////////
