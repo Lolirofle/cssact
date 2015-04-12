@@ -22,6 +22,8 @@ mod parse;
 //TODO: Parse the values syntax for each property type in a declaration
 //TODO: Shorten color values by comparing the representations (Color name, its rgb(a) string, hex value...) and look for the shortest one
 //TODO: Option to just check for errors
+//TODO: Better error messages, more detailed. Also, the current ones only reports at the rule level. It would be more convenient to know which declaration that is causing a problem if that is the case. Because everything that returns Result<_,()>, the error handling can be passed through a closure in the parser structures.
+//TODO: Raw CSS insertion
 
 #[plugin_registrar]
 pub fn plugin_registrar(reg: &mut Registry){
