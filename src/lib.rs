@@ -1,5 +1,6 @@
-#![feature(plugin_registrar,quote,rustc_private,slice_patterns)]
+#![feature(collections,plugin_registrar,quote,rustc_private,slice_patterns)]
 
+extern crate collections;
 extern crate syntax;
 extern crate rustc;
 extern crate cssparser as css;
@@ -60,7 +61,7 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 }
 
 ////////////////////////////////////////////////////////////////////
-// This code snippet is copied from the `rust-lang/regex` package and slightly modified.
+// This code snippet is copied from the `rust-lang/regex` package and is also slightly modified.
 // (Date: 2015-04-10. Version: 0.1.27. Commit: 910aef40aca4f525dd2fecc54a78e9bc183039d1)
 // (`https://github.com/rust-lang/regex/blob/910aef40aca4f525dd2fecc54a78e9bc183039d1/regex_macros/src/lib.rs`)
 // Credits goes to the developers of the regex package.
@@ -77,31 +78,31 @@ fn expand_css<'context>(context: &'context mut ExtCtxt,span: Span,tts: &[ast::To
 ////////////////////////////////////////////////////////////////////
 /// Looks for a single string literal and returns it.
 /// Otherwise, logs an error with cx.span_err and returns None.
-fn parse_single_string_literal(cx: &mut ExtCtxt, tts: &[ast::TokenTree]) -> (Option<String>,Span) {
-    let mut parser = cx.new_parser_from_tts(tts);
-    let entry = cx.expander().fold_expr(parser.parse_expr());
-    let regex = match entry.node {
-        ast::ExprLit(ref lit) => {
-            match lit.node {
-                ast::LitStr(ref s, _) => s.to_string(),
-                _ => {
-                    cx.span_err(entry.span, &format!(
-                        "expected string literal but got `{}`",
-                        pprust::lit_to_string(&**lit)));
-                    return (None,entry.span)
-                }
-            }
-        }
-        _ => {
-            cx.span_err(entry.span, &format!(
-                "expected string literal but got `{}`",
-                pprust::expr_to_string(&*entry)));
-            return (None,entry.span)
-        }
-    };
-    if !parser.eat(&rust_token::Eof).ok().unwrap() {
-        cx.span_err(parser.span, "only one string literal allowed");
-        return (None,parser.span);
-    }
-    (Some(regex),entry.span)
+fn parse_single_string_literal(cx: &mut ExtCtxt,tts: &[ast::TokenTree]) -> (Option<String>,Span){
+	let mut parser = cx.new_parser_from_tts(tts);
+	let entry = cx.expander().fold_expr(parser.parse_expr());
+	let s = match entry.node{
+		ast::ExprLit(ref lit) => {
+			match lit.node {
+				ast::LitStr(ref s,_) => s.to_string(),
+				_ => {
+					cx.span_err(entry.span,&format!(
+						"expected string literal but got `{}`",
+						pprust::lit_to_string(&**lit)));
+					return (None,entry.span)
+				}
+			}
+		}
+		_ => {
+			cx.span_err(entry.span,&format!(
+				"expected string literal but got `{}`",
+				pprust::expr_to_string(&*entry)));
+			return (None,entry.span)
+		}
+	};
+	if !parser.eat(&rust_token::Eof).ok().unwrap(){
+		cx.span_err(parser.span,"only one string literal allowed");
+		return (None,parser.span);
+	}
+	(Some(s),entry.span)
 }
